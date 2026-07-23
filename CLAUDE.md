@@ -44,8 +44,8 @@ before making changes; keep it updated as decisions get finalized.
       content. Implemented in `src/content/{en,uk,pl}/promo.md`.
 - [ ] **WIC/LINK/EBT acceptance** — if yes, include the badge (Caputo's does
       this; builds trust in grocery context).
-- [ ] **Newsletter** — in or out for v1, and via what (SES form vs. a
-      third-party embed).
+- [x] **Newsletter** — resolved: out for v1. No signup form/embed anywhere
+      in the site; may be revisited post-launch.
 - [ ] **Real photos/videos** — pending Instagram data export (Meta's
       "Download Your Information" tool). Until provided, use placeholders per
       the convention in Section 4. Do not scrape or hotlink Instagram content
