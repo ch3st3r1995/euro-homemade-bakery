@@ -12,8 +12,8 @@ export const ADDRESS = {
 };
 
 export const PHONE = {
-  display: '(000) 000-0000', // TODO(owner): real phone number -- not yet provided
-  href: 'tel:+10000000000',
+  display: '(773) 637-3772',
+  href: 'tel:+17736373772',
 };
 
 export const HOURS: Array<{ day: string; hours: string }> = [

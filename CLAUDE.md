@@ -42,8 +42,8 @@ before making changes; keep it updated as decisions get finalized.
       items (excluding household chemicals and medication); every Friday,
       10% off for seniors. Source: the business's own Instagram promo
       content. Implemented in `src/content/{en,uk,pl}/promo.md`.
-- [ ] **WIC/LINK/EBT acceptance** — if yes, include the badge (Caputo's does
-      this; builds trust in grocery context).
+- [x] **WIC/LINK/EBT acceptance** — resolved: not implemented for v1, no
+      badge shown.
 - [x] **Newsletter** — resolved: out for v1. No signup form/embed anywhere
       in the site; may be revisited post-launch.
 - [ ] **Real photos/videos** — pending Instagram data export (Meta's
