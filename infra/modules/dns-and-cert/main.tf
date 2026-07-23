@@ -1,4 +1,8 @@
-resource "aws_route53_zone" "this" {
+# The domain was registered directly through Route 53, which auto-creates
+# a hosted zone for it -- look that zone up rather than creating a second,
+# undelegated one for the same name.
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone
+data "aws_route53_zone" "this" {
   name = var.domain_name
 }
 
@@ -24,7 +28,7 @@ resource "aws_route53_record" "cert_validation" {
     }
   }
 
-  zone_id         = aws_route53_zone.this.zone_id
+  zone_id         = data.aws_route53_zone.this.zone_id
   name            = each.value.name
   type            = each.value.type
   records         = [each.value.record]

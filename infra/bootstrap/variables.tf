@@ -16,7 +16,7 @@ variable "github_repo" {
 }
 
 variable "domain_name" {
-  description = "Site domain name (also the S3 site bucket name in infra/modules/site-hosting) -- not yet registered, see CLAUDE.md Section 1."
+  description = "Site domain name (also the S3 site bucket name in infra/modules/site-hosting) -- registered via Route 53, see CLAUDE.md Section 1."
   type        = string
   default     = "eurohomemadebakery.com"
 }

@@ -1,5 +1,5 @@
 variable "domain_name" {
-  description = "Site domain -- not yet registered, see CLAUDE.md Section 1."
+  description = "Site domain -- registered via Route 53 (see CLAUDE.md Section 1)."
   type        = string
   default     = "eurohomemadebakery.com"
 }

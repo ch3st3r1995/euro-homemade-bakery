@@ -11,7 +11,7 @@ output "cloudfront_domain_name" {
 }
 
 output "route53_nameservers" {
-  description = "Update the domain registrar's nameservers to these values if the domain wasn't registered directly through Route 53 (CLAUDE.md Section 5, step 6)."
+  description = "Informational only -- the domain was registered directly through Route 53, so it's already delegated to this zone automatically; no registrar nameserver update is needed (CLAUDE.md Section 5, step 6 is a no-op here)."
   value       = module.dns_and_cert.name_servers
 }
 

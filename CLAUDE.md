@@ -33,11 +33,9 @@ before making changes; keep it updated as decisions get finalized.
 
 ## 1. Open decisions — resolve before/while building
 
-- [x] **Final domain name: `eurohomemadebakery.com`.** Not yet registered —
-      confirm availability and register before Section 5 proceeds past the
-      ACM/Route 53 steps. If unavailable, fallbacks in priority order:
-      `eurohomemade.com`, `eurohomemadefoods.com`, `shopeurohomemade.com` /
-      `.co` / `.shop`.
+- [x] **Final domain name: `eurohomemadebakery.com`.** Registered directly
+      through Route 53 (auto-created hosted zone) -- Section 5's DNS/ACM
+      steps can proceed.
 - [x] **Tuesday promo specifics** — resolved: every Tuesday, 20% off all
       items (excluding household chemicals and medication); every Friday,
       10% off for seniors. Source: the business's own Instagram promo
@@ -224,12 +222,16 @@ unless the bootstrap resources themselves change. It creates:
 
 **Ordered sequence**:
 1. Bootstrap (`infra/bootstrap/`) — run locally, once.
-2. Confirm `eurohomemadebakery.com` availability and register it.
+2. ~~Confirm `eurohomemadebakery.com` availability and register it.~~ Done
+   — registered directly through Route 53 (auto-created hosted zone);
+   `modules/dns-and-cert` looks up that existing zone rather than creating
+   a new one.
 3. Write the Terraform root config + modules in `infra/`.
 4. Open a PR — CI runs `terraform plan`; review the diff.
 5. Merge to `main` — CI runs `terraform apply` (behind the approval gate).
-6. If the domain wasn't registered directly through Route 53, update the
-   registrar's nameservers to the ones Terraform's Route 53 zone output gives.
+6. ~~If the domain wasn't registered directly through Route 53, update the
+   registrar's nameservers~~ -- N/A, it was registered directly through
+   Route 53, so delegation is automatic.
 7. Confirm the CloudFront distribution + Route 53 records resolve over HTTPS.
 8. Wire up `deploy.yml` once the bucket/distribution outputs exist from step 5.
 
@@ -265,12 +267,14 @@ rather than assuming the custom path by default.
    folders. **Do not run `infra/bootstrap/`** — that step is run personally
    by the owner, locally, once their AWS account and ACM certificate are
    ready.
-7. Confirm `eurohomemadebakery.com` availability; owner registers it.
+7. ~~Confirm `eurohomemadebakery.com` availability; owner registers it.~~
+   Done -- registered directly through Route 53.
 8. Owner runs `infra/bootstrap/` locally (state bucket, lock table, OIDC
    provider, both IAM roles).
 9. Open a PR against the rest of `infra/`, review the `terraform plan`
    output, merge to trigger `terraform apply`.
-9. Update registrar nameservers if needed; confirm HTTPS resolves.
+10. ~~Update registrar nameservers if needed~~ -- N/A, registered directly
+    through Route 53. Confirm HTTPS resolves.
 10. Wire up `deploy.yml` using Terraform's outputs (bucket name, distribution
     ID); do a full deploy and verify all three locales resolve and the
     contact form round-trips through SES.
