@@ -1,12 +1,11 @@
 ---
 page: promo
-title: Weekly Promo | Euro Homemade Bakery & Deli
-description: This week's promotion at Euro Homemade Bakery & Deli.
+title: Weekly Specials | Euro Homemade Bakery & Deli
+description: This week's promotions at Euro Homemade Bakery & Deli.
 translated: true
-promoTitle: Weekly Tuesday Special
+promoTitle: Weekly Specials
 promoActive: true
 ---
 
-<!-- TODO(owner): Tuesday promo specifics (name/discount/exclusions) are unresolved -- see CLAUDE.md Section 1. Generic placeholder copy below until decided. -->
-
-Ask in store for this week's Tuesday special.
+- **Every Tuesday:** 20% off all items (excluding household chemicals and medication).
+- **Every Friday:** 10% off for seniors.

@@ -38,10 +38,10 @@ before making changes; keep it updated as decisions get finalized.
       ACM/Route 53 steps. If unavailable, fallbacks in priority order:
       `eurohomemade.com`, `eurohomemadefoods.com`, `shopeurohomemade.com` /
       `.co` / `.shop`.
-- [ ] **Tuesday promo specifics** — name, discount, exclusions (competitors
-      use named recurring promos like "Crazy Wednesday" / "Senior Tuesday" —
-      Euro Homemade's Tuesday promo should get similar treatment once details
-      are known).
+- [x] **Tuesday promo specifics** — resolved: every Tuesday, 20% off all
+      items (excluding household chemicals and medication); every Friday,
+      10% off for seniors. Source: the business's own Instagram promo
+      content. Implemented in `src/content/{en,uk,pl}/promo.md`.
 - [ ] **WIC/LINK/EBT acceptance** — if yes, include the badge (Caputo's does
       this; builds trust in grocery context).
 - [ ] **Newsletter** — in or out for v1, and via what (SES form vs. a
