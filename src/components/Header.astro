@@ -1,0 +1,25 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { ui, type Locale } from '../i18n/ui';
+import { BUSINESS_NAME } from '../consts';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+interface Props {
+  locale: Locale;
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const t = ui[locale];
+---
+
+<header>
+  <a href={getRelativeLocaleUrl(locale, '')} class="brand">{BUSINESS_NAME}</a>
+  <nav aria-label="Main navigation">
+    <a href={getRelativeLocaleUrl(locale, '')}>{t.nav.home}</a>
+    <a href={getRelativeLocaleUrl(locale, 'about')}>{t.nav.about}</a>
+    <a href={getRelativeLocaleUrl(locale, 'catering')}>{t.nav.catering}</a>
+    <a href={getRelativeLocaleUrl(locale, 'contact')}>{t.nav.contact}</a>
+  </nav>
+  <LanguageSwitcher locale={locale} path={path} />
+</header>

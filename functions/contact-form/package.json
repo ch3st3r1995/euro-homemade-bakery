@@ -1,0 +1,9 @@
+{
+  "name": "contact-form",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.0.0"
+  }
+}

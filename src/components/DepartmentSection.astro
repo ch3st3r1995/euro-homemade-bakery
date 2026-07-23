@@ -1,0 +1,23 @@
+---
+interface Props {
+  department: 'bakery' | 'deli' | 'grocery';
+  heading: string;
+  description: string;
+}
+
+const { department, heading, description } = Astro.props;
+
+// Placeholder images per CLAUDE.md Section 4 convention:
+// public/images/{section}/placeholder-{n}.{ext}
+// SVG placeholders for now (no image-generation tooling available in this
+// environment) -- swap for real photos per MEDIA-TODO.md.
+const images = [1, 2].map((n) => `/images/${department}/placeholder-${n}.svg`);
+---
+
+<section class={`department department-${department}`}>
+  <h2>{heading}</h2>
+  <p>{description}</p>
+  <div class="department-gallery">
+    {images.map((src) => <img src={src} alt="" loading="lazy" />)}
+  </div>
+</section>

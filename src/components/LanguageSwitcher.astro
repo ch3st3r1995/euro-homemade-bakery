@@ -1,0 +1,22 @@
+---
+// getRelativeLocaleUrl: docs.astro.build/en/reference/modules/astro-i18n/
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { locales, ui, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  path: string; // e.g. '' | 'about' | 'catering' | 'contact'
+}
+
+const { locale, path } = Astro.props;
+---
+
+<nav aria-label="Language switcher" class="language-switcher">
+  {
+    locales.map((loc) => (
+      <a href={getRelativeLocaleUrl(loc, path)} aria-current={loc === locale ? 'page' : undefined}>
+        {ui[locale].languageNames[loc]}
+      </a>
+    ))
+  }
+</nav>

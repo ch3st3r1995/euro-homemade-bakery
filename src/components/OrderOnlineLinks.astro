@@ -1,0 +1,16 @@
+---
+import { ui, type Locale } from '../i18n/ui';
+import { DOORDASH_URL, UBER_EATS_URL } from '../consts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = ui[locale];
+---
+
+<div class="order-online-links">
+  <a href={DOORDASH_URL} rel="noopener noreferrer" target="_blank">{t.orderOnline.doordash}</a>
+  <a href={UBER_EATS_URL} rel="noopener noreferrer" target="_blank">{t.orderOnline.ubereats}</a>
+</div>
