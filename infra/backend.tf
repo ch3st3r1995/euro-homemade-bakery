@@ -7,13 +7,13 @@ terraform {
     }
   }
 
-  # Backend blocks can't reference variables -- these are literal
-  # placeholders until infra/bootstrap has run once.
+  # Backend blocks can't reference variables -- from infra/bootstrap's
+  # `terraform output` (bootstrap applied 2026-07-23, account 202891436069).
   # https://developer.hashicorp.com/terraform/language/backend/s3
   backend "s3" {
-    bucket       = "REPLACE_WITH_BOOTSTRAP_STATE_BUCKET_NAME" # TODO(owner): from `terraform output state_bucket_name` in infra/bootstrap
+    bucket       = "euro-homemade-bakery-tfstate"
     key          = "euro-homemade-bakery/terraform.tfstate"
-    region       = "us-east-2" # TODO(owner): match infra/bootstrap's aws_region if different
+    region       = "us-east-2"
     use_lockfile = true
   }
 }
