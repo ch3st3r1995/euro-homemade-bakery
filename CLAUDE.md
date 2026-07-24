@@ -134,11 +134,10 @@ euro-homemade-bakery/
 │   ├── variables.tf
 │   ├── outputs.tf                 # bucket name / CloudFront distribution ID, etc.
 │   └── backend.tf                 # points at the bootstrap-created state bucket
-└── .github/
-    └── workflows/
-        ├── infra.yml               # terraform plan (PR) / apply (main)
-        └── deploy.yml               # site content build + sync + invalidate
 ```
+
+No `.github/workflows/` — deployment is local/manual, not CI-driven (see
+Section 5).
 
 ## 4. Media placeholder convention
 
@@ -164,33 +163,27 @@ rather than by hand): S3 (private bucket, Block Public Access on) ← CloudFront
 certificate issued in `us-east-1` regardless of the working region elsewhere.
 No ECS/EC2/containers — nothing here needs a persistent server process.
 
-**The bootstrap problem**: Terraform needs a remote state backend (S3 bucket
-+ a lock mechanism), and CI needs an OIDC-trusted IAM role to run Terraform —
-but nothing can create those two things via CI, since CI doesn't have a role
-to assume until they exist. Solve this with a one-time, manual, **local-state**
-bootstrap step (`infra/bootstrap/`), run once from a developer machine using
-an IAM admin user's credentials — never via CI, never touched again afterward
-unless the bootstrap resources themselves change. It creates:
+**The bootstrap problem** (historical — already solved, see status below):
+Terraform needs a remote state backend (S3 bucket + a lock mechanism).
+Solved with a one-time, manual, **local-state** bootstrap step
+(`infra/bootstrap/`), run once from a developer machine using an IAM admin
+user's credentials — never touched again afterward unless the bootstrap
+resources themselves change. **Status: already applied** (2026-07-23,
+AWS account 202891436069, `us-east-2`). It created:
 
-- **Terraform state bucket** — S3, versioned, encrypted, Block Public Access on.
-- **State lock mechanism** — DynamoDB table (or S3-native locking if the
-  Terraform version in use is ≥1.10 and that feature is preferred instead).
-- **GitHub OIDC identity provider** for this AWS account (account-wide —
-  skip creating a second one if this account already has one from another
-  project).
-- **Two OIDC-trusted IAM roles**, both trusted only by this specific repo:
-  - `terraform-apply` — broader permissions (S3, CloudFront, Route 53, ACM,
-    SES, Lambda, API Gateway, Budgets, plus the IAM permissions needed to
-    manage those resources). This is the one deliberate exception to
-    least-privilege-by-default in this plan, since Terraform itself needs to
-    create/modify these resource types. Still scope to this AWS
-    account/resource set, not `*`.
-  - `content-deploy` — unchanged from the original plan: narrow, S3 write +
-    CloudFront invalidate only, used solely by the site-content deploy
-    workflow, never by Terraform.
+- **Terraform state bucket** — `euro-homemade-bakery-tfstate`, versioned,
+  encrypted, Block Public Access on. Referenced by `infra/backend.tf`.
+- **State lock mechanism** — S3-native `use_lockfile` (Terraform ≥1.10), no
+  DynamoDB table.
+- A **GitHub OIDC identity provider** and two OIDC-trusted IAM roles
+  (`terraform-apply`, `content-deploy`) were also created, originally
+  intended for a CI-based deploy pipeline. **Deployment is now done locally
+  instead** (see below) — these roles are unused but left in place in AWS
+  since they're harmless/zero-cost, in case CI is revisited later.
 
-**Everything past bootstrap is real Terraform, remote state, run through CI**
-(`infra/main.tf` + `infra/modules/*` per the repo structure in Section 3):
+**Everything past bootstrap is real Terraform, remote state, applied
+locally** (`infra/main.tf` + `infra/modules/*` per the repo structure in
+Section 3):
 
 - `modules/dns-and-cert` — Route 53 hosted zone + ACM cert (us-east-1
   provider alias) + `aws_acm_certificate_validation`, which natively handles
@@ -204,36 +197,38 @@ unless the bootstrap resources themselves change. It creates:
 - `modules/contact-form` — Lambda + API Gateway for the contact form.
 - `modules/budget` — AWS Budgets alert (e.g. $10/mo threshold).
 - Root `variables.tf` holds the domain name and other inputs; `outputs.tf`
-  exposes the bucket name / CloudFront distribution ID that the content-deploy
-  workflow needs.
+  exposes the bucket name / CloudFront distribution ID / contact-form API
+  endpoint needed for the manual deploy step below.
 
-**CI/CD — two separate workflows, deliberately not one**:
-1. `.github/workflows/infra.yml` — triggers on changes under `infra/**`
-   (excluding `infra/bootstrap/`, which is never run via CI). `terraform plan`
-   on pull requests (post the plan as a PR comment for review), `terraform
-   apply` on merge to `main`. Uses the `terraform-apply` OIDC role. Recommend
-   gating the apply step behind a GitHub Environment with required reviewers,
-   since this role's permissions are broader than content-deploy's.
-2. `.github/workflows/deploy.yml` — triggers on changes under `src/**` /
-   `public/**`. Builds the Astro site, `aws s3 sync ./dist s3://<bucket>
-   --delete`, `aws cloudfront create-invalidation`. Uses the narrow
-   `content-deploy` OIDC role. Reads the bucket name/distribution ID from
-   Terraform's outputs.
+**Deployment — local, manual, no CI** (deliberate pivot away from the
+originally-planned GitHub Actions pipeline — no `.github/workflows/`
+directory in this repo):
+
+1. `cd infra && terraform init && terraform plan && terraform apply` —
+   run from a developer machine with real AWS credentials (the same admin
+   user used for bootstrap). Applies `dns-and-cert`, `site-hosting`,
+   `email`, `contact-form`, `budget`.
+2. Site content deploy: `npm ci && npm run build` (with
+   `PUBLIC_CONTACT_FORM_ENDPOINT` set from `terraform output
+   contact_form_api_endpoint`), then `aws s3 sync ./dist
+   s3://<site_bucket_name> --delete` and `aws cloudfront
+   create-invalidation --distribution-id <cloudfront_distribution_id>
+   --paths "/*"`, using the bucket name / distribution ID from `terraform
+   output`.
 
 **Ordered sequence**:
-1. Bootstrap (`infra/bootstrap/`) — run locally, once.
+
+1. ~~Bootstrap (`infra/bootstrap/`) — run locally, once.~~ Done
+   (2026-07-23).
 2. ~~Confirm `eurohomemadebakery.com` availability and register it.~~ Done
    — registered directly through Route 53 (auto-created hosted zone);
    `modules/dns-and-cert` looks up that existing zone rather than creating
    a new one.
-3. Write the Terraform root config + modules in `infra/`.
-4. Open a PR — CI runs `terraform plan`; review the diff.
-5. Merge to `main` — CI runs `terraform apply` (behind the approval gate).
-6. ~~If the domain wasn't registered directly through Route 53, update the
-   registrar's nameservers~~ -- N/A, it was registered directly through
-   Route 53, so delegation is automatic.
-7. Confirm the CloudFront distribution + Route 53 records resolve over HTTPS.
-8. Wire up `deploy.yml` once the bucket/distribution outputs exist from step 5.
+3. ~~Write the Terraform root config + modules in `infra/`.~~ Done.
+4. `terraform apply` locally against the rest of `infra/` (no PR/CI gate —
+   solo project, reviewed by running `terraform plan` yourself first).
+5. Confirm the CloudFront distribution + Route 53 records resolve over HTTPS.
+6. Run the manual site-content deploy step above.
 
 **Cost expectation**: same ~$1–5/month as before, plus a negligible few cents
 for the Terraform state bucket and (if used) the DynamoDB lock table.
@@ -269,14 +264,14 @@ rather than assuming the custom path by default.
    ready.
 7. ~~Confirm `eurohomemadebakery.com` availability; owner registers it.~~
    Done -- registered directly through Route 53.
-8. Owner runs `infra/bootstrap/` locally (state bucket, lock table, OIDC
-   provider, both IAM roles).
-9. Open a PR against the rest of `infra/`, review the `terraform plan`
-   output, merge to trigger `terraform apply`.
-10. ~~Update registrar nameservers if needed~~ -- N/A, registered directly
-    through Route 53. Confirm HTTPS resolves.
-10. Wire up `deploy.yml` using Terraform's outputs (bucket name, distribution
-    ID); do a full deploy and verify all three locales resolve and the
-    contact form round-trips through SES.
+8. ~~Owner runs `infra/bootstrap/` locally~~ Done (2026-07-23).
+9. Owner runs `terraform apply` locally against the rest of `infra/` --
+   no PR/CI (deployment is local/manual, see Section 5). Confirm HTTPS
+   resolves (registrar nameserver update is N/A, registered directly
+   through Route 53).
+10. Run the manual site-content deploy (build + `aws s3 sync` +
+    `aws cloudfront create-invalidation`, using Terraform's outputs for the
+    bucket name/distribution ID) and verify all three locales resolve and
+    the contact form round-trips through SES.
 11. Swap placeholders for real media once the Instagram export lands, per the
     `MEDIA-TODO.md` checklist.
