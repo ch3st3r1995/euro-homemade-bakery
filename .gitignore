@@ -224,6 +224,10 @@ npm-debug.log*
 # Astro
 .astro/
 
+# Local build artifacts
+.build/
+terraform-plan.txt
+
 # Terraform
 **/.terraform/*
 *.tfstate

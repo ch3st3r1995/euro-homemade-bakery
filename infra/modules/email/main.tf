@@ -12,7 +12,7 @@ resource "aws_sesv2_email_identity" "this" {
 # example). Verify against docs.aws.amazon.com/ses before the first real
 # `terraform apply`.
 resource "aws_route53_record" "dkim" {
-  for_each = toset(aws_sesv2_email_identity.this.dkim_signing_attributes[0].tokens)
+  for_each = toset(try(aws_sesv2_email_identity.this.dkim_signing_attributes[0].tokens, []))
 
   zone_id = var.hosted_zone_id
   name    = "${each.value}._domainkey.${var.domain_name}"
