@@ -30,6 +30,20 @@ resource "aws_cloudfront_origin_access_control" "site" {
   signing_protocol                  = "sigv4"
 }
 
+# CloudFront's default_root_object only applies to the literal distribution
+# root ("/"), never to subdirectories -- confirmed via
+# docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DefaultRootObject.html.
+# This site is a multi-page static build with directory-style routing
+# (dist/en/index.html, dist/en/about/index.html, ...), so every locale page
+# URL would 403/404 without this rewrite -- see index-rewrite.js.
+resource "aws_cloudfront_function" "index_rewrite" {
+  name    = "${replace(var.domain_name, ".", "-")}-index-rewrite"
+  runtime = "cloudfront-js-2.0"
+  comment = "Append index.html to directory-style request URIs"
+  publish = true
+  code    = file("${path.module}/index-rewrite.js")
+}
+
 resource "aws_cloudfront_distribution" "site" {
   enabled             = true
   is_ipv6_enabled     = true
@@ -59,6 +73,11 @@ resource "aws_cloudfront_distribution" "site" {
       cookies {
         forward = "none"
       }
+    }
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.index_rewrite.arn
     }
   }
 
