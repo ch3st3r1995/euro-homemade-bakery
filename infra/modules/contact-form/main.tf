@@ -32,11 +32,29 @@ resource "aws_iam_role_policy_attachment" "lambda_basic_logs" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+# SES's IAM authorization for SendEmail checks resource permissions against
+# every identity ARN involved in the send -- not just the FROM identity, but
+# also the destination address if it happens to itself be a verified SES
+# identity in the same account (ours does, since RECIPIENT_EMAIL is
+# separately verified so the account can stay in SES sandbox mode -- see
+# functions/contact-form/README.md). Confirmed via a real AccessDeniedException
+# naming the recipient identity ARN as the denied resource. Derive
+# region/account from ses_identity_arn (already available) rather than adding
+# extra data sources.
+locals {
+  ses_arn_parts   = split(":", var.ses_identity_arn)
+  ses_arn_region  = local.ses_arn_parts[3]
+  ses_arn_account = local.ses_arn_parts[4]
+}
+
 data "aws_iam_policy_document" "lambda_ses" {
   statement {
-    effect    = "Allow"
-    actions   = ["ses:SendEmail", "ses:SendRawEmail"]
-    resources = [var.ses_identity_arn]
+    effect  = "Allow"
+    actions = ["ses:SendEmail", "ses:SendRawEmail"]
+    resources = [
+      var.ses_identity_arn,
+      "arn:aws:ses:${local.ses_arn_region}:${local.ses_arn_account}:identity/${var.recipient_email}",
+    ]
   }
 }
 
