@@ -16,7 +16,7 @@ const today = HOURS[0];
   <div>
     <p>{ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}</p>
     <p><a href={PHONE.href}>{PHONE.display}</a></p>
-    <p>{t.hours}: {today.day} {today.hours}</p>
+    <p>{t.hours}: {t.days[today.day]} {today.hours}</p>
   </div>
   <div>
     <a href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">{t.footer.followUs}</a>

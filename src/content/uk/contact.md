@@ -1,10 +1,11 @@
 ---
 page: contact
-title: Contact | Euro Homemade Bakery & Deli
-description: Hours, address, and how to reach Euro Homemade Bakery & Deli.
+title: Контакти | Euro Homemade Bakery & Deli
+description: Години роботи, адреса та контакти Euro Homemade Bakery & Deli.
 translated: false
 ---
-<!-- TODO(owner/translator): untranslated placeholder -- English copy, needs Ukrainian translation -->
 
+<!-- TODO(owner/translator): AI-drafted translation, not reviewed by a
+     native speaker -- verify wording before treating as final. -->
 
-Have a question, or want to place a catering order? Send us a message and we'll get back to you, or use the phone number and address below.
+Маєте запитання або хочете замовити кейтеринг? Напишіть нам, і ми з вами зв'яжемося, або скористайтеся номером телефону та адресою нижче.

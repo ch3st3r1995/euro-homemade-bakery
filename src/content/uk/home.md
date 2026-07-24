@@ -1,22 +1,23 @@
 ---
 page: home
-title: Euro Homemade Bakery & Deli | Chicago
-description: Polish and European bakery, deli, and grocery store in the Chicago area.
+title: Euro Homemade Bakery & Deli | Чикаго
+description: Польська та європейська пекарня, делікатеси та продуктовий магазин у районі Чикаго.
 translated: false
 heroHeading: Euro Homemade Bakery & Deli
-heroSubheading: Fresh-baked bread, house-made deli, and European groceries -- Chicago's taste of home.
+heroSubheading: Свіжоспечений хліб, домашні делікатеси та європейські продукти -- смак дому в Чикаго.
 departments:
   bakery:
-    heading: Bakery
-    description: Fresh bread and pastries baked daily, from crusty European loaves to sweet treats.
+    heading: Пекарня
+    description: Свіжий хліб і випічка щодня -- від хрусткого європейського хліба до солодощів.
   deli:
-    heading: Deli
-    description: House-made and imported meats, cheeses, and prepared foods for every occasion.
+    heading: Делікатеси
+    description: Домашні та імпортні м'ясні й сирні вироби, готові страви на будь-яку нагоду.
   grocery:
-    heading: Grocery
-    description: Shelves stocked with the European grocery staples you grew up with.
+    heading: Продукти
+    description: Полиці з європейськими продуктами, до яких ви звикли змалку.
 ---
-<!-- TODO(owner/translator): untranslated placeholder -- English copy, needs Ukrainian translation -->
 
+<!-- TODO(owner/translator): AI-drafted translation, not reviewed by a
+     native speaker -- verify wording before treating as final. -->
 
-Family-run and proud of it -- come taste why the neighborhood keeps coming back.
+Сімейний бізнес, яким ми пишаємось -- завітайте й скуштуйте, чому сусіди повертаються знову й знову.

@@ -1,12 +1,13 @@
 ---
 page: catering
-title: Catering | Euro Homemade Bakery & Deli
-description: Catering menu and ordering info for Euro Homemade Bakery & Deli.
+title: Кейтеринг | Euro Homemade Bakery & Deli
+description: Меню кейтерингу та інформація про замовлення в Euro Homemade Bakery & Deli.
 translated: false
 ---
-<!-- TODO(owner/translator): untranslated placeholder -- English copy, needs Ukrainian translation -->
 
+<!-- TODO(owner/translator): AI-drafted translation, not reviewed by a
+     native speaker -- verify wording before treating as final. -->
 
 <!-- TODO(owner): replace with the real catering menu/pricing once available. -->
 
-Planning an event? Our catering menu features platters from the bakery, deli, and grocery -- perfect for offices, family gatherings, and holidays. We don't take catering orders online yet -- call or email us directly and we'll help you put together the right spread.
+Плануєте подію? Наше кейтеринг-меню включає страви з пекарні, делікатесів та продуктового відділу -- ідеально для офісів, сімейних зустрічей і свят. Ми поки що не приймаємо замовлення на кейтеринг онлайн -- зателефонуйте або напишіть нам, і ми допоможемо підібрати потрібний набір страв.

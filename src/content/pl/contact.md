@@ -1,10 +1,11 @@
 ---
 page: contact
-title: Contact | Euro Homemade Bakery & Deli
-description: Hours, address, and how to reach Euro Homemade Bakery & Deli.
+title: Kontakt | Euro Homemade Bakery & Deli
+description: Godziny otwarcia, adres i kontakt do Euro Homemade Bakery & Deli.
 translated: false
 ---
-<!-- TODO(owner/translator): untranslated placeholder -- English copy, needs Polish translation -->
 
+<!-- TODO(owner/translator): AI-drafted translation, not reviewed by a
+     native speaker -- verify wording before treating as final. -->
 
-Have a question, or want to place a catering order? Send us a message and we'll get back to you, or use the phone number and address below.
+Masz pytanie lub chcesz złożyć zamówienie cateringowe? Napisz do nas, a odpowiemy, lub skorzystaj z numeru telefonu i adresu poniżej.
