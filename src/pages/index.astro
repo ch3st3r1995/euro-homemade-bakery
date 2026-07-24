@@ -1,0 +1,19 @@
+---
+// Static-site root redirect to the default locale. Astro.redirect()/the
+// i18n `redirectToDefaultLocale` option both require SSR middleware, which
+// never runs for this adapter-less static build -- a meta-refresh is the
+// pattern Astro's own docs recommend for static sites:
+// docs.astro.build/en/recipes/i18n/
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0;url=/en/" />
+    <title>Euro Homemade Bakery & Deli</title>
+  </head>
+  <body>
+    <p>Redirecting to <a href="/en/">/en/</a>...</p>
+  </body>
+</html>

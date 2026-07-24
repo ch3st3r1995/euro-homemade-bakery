@@ -1,0 +1,24 @@
+---
+// getEntry/render: docs.astro.build/en/reference/modules/astro-content/
+import { getEntry, render } from 'astro:content';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const entry = await getEntry(locale, 'promo');
+if (!entry) throw new Error(`Missing promo content entry for locale "${locale}"`);
+if (entry.data.page !== 'promo') throw new Error('promo.md frontmatter must have page: promo');
+const { Content } = await render(entry);
+---
+
+{
+  entry.data.promoActive && (
+    <section class="promo-banner">
+      <h2>{entry.data.promoTitle}</h2>
+      <Content />
+    </section>
+  )
+}

@@ -1,0 +1,33 @@
+---
+import { ui, type Locale } from '../i18n/ui';
+import { ADDRESS, PHONE, HOURS, GOOGLE_MAPS_EMBED_URL, GOOGLE_MAPS_DIRECTIONS_URL } from '../consts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = ui[locale];
+---
+
+<section class="hours-address-map">
+  <div>
+    <h2>{t.hours}</h2>
+    <ul>
+      {HOURS.map((h) => (
+        <li>
+          <span>{h.day}</span> <span>{h.hours}</span>
+        </li>
+      ))}
+    </ul>
+    <p>{ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}</p>
+    <p><a href={PHONE.href}>{PHONE.display}</a></p>
+    <a href={GOOGLE_MAPS_DIRECTIONS_URL} rel="noopener noreferrer" target="_blank">{t.directions}</a>
+  </div>
+  <iframe
+    title="Map"
+    src={GOOGLE_MAPS_EMBED_URL}
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  />
+</section>
