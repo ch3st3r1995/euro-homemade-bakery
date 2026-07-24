@@ -14,11 +14,11 @@ const { Content } = await render(entry);
   <Content />
 
   <form id="contact-form">
-    <label>Name <input type="text" name="name" required /></label>
-    <label>Email <input type="email" name="email" required /></label>
-    <label>Phone <input type="tel" name="phone" /></label>
-    <label>Message <textarea name="message" required></textarea></label>
-    <button type="submit">Send</button>
+    <label>Ім'я <input type="text" name="name" required /></label>
+    <label>Електронна пошта <input type="email" name="email" required /></label>
+    <label>Телефон <input type="tel" name="phone" /></label>
+    <label>Повідомлення <textarea name="message" required></textarea></label>
+    <button type="submit">Надіслати</button>
     <p id="contact-form-status" role="status"></p>
   </form>
 
@@ -37,12 +37,12 @@ const { Content } = await render(entry);
     if (!status) return;
 
     if (!endpoint) {
-      status.textContent = 'Contact form is not configured yet -- please call or email us directly.';
+      status.textContent = 'Форма зв\'язку ще не налаштована -- будь ласка, зателефонуйте або напишіть нам на електронну пошту.';
       return;
     }
 
     const data = Object.fromEntries(new FormData(form).entries());
-    status.textContent = 'Sending...';
+    status.textContent = 'Надсилання...';
 
     try {
       const response = await fetch(endpoint, {
@@ -51,10 +51,10 @@ const { Content } = await render(entry);
         body: JSON.stringify(data),
       });
       if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-      status.textContent = 'Thanks -- we received your message and will be in touch.';
+      status.textContent = 'Дякуємо -- ми отримали ваше повідомлення і незабаром з вами зв\'яжемося.';
       form.reset();
     } catch {
-      status.textContent = 'Something went wrong -- please call or email us directly.';
+      status.textContent = 'Щось пішло не так -- будь ласка, зателефонуйте або напишіть нам на електронну пошту.';
     }
   });
 </script>

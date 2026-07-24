@@ -1,12 +1,13 @@
 ---
 page: about
-title: Our Story | Euro Homemade Bakery & Deli
-description: The heritage story behind Euro Homemade Bakery & Deli.
+title: Nasza historia | Euro Homemade Bakery & Deli
+description: Historia powstania Euro Homemade Bakery & Deli.
 translated: false
 ---
-<!-- TODO(owner/translator): untranslated placeholder -- English copy, needs Polish translation -->
 
+<!-- TODO(owner/translator): AI-drafted translation, not reviewed by a
+     native speaker -- verify wording before treating as final. -->
 
 <!-- TODO(owner): replace with the real heritage story once available (source: Instagram export / owner interview). Placeholder copy below is intentionally generic. -->
 
-Euro Homemade Bakery & Deli started with a simple idea: bring the tastes of home to the neighborhood. What began as a small family effort has grown into a gathering place for the Polish and broader European community in Chicago -- a spot where the bread is always fresh, the deli counter remembers your order, and the shelves are stocked with the groceries that make a house feel like home.
+Euro Homemade Bakery & Deli zaczęło się od prostego pomysłu: przynieść smak domu do tej okolicy. To, co zaczęło się jako niewielkie przedsięwzięcie rodzinne, stało się miejscem spotkań polskiej i szerszej europejskiej społeczności Chicago -- miejscem, gdzie chleb jest zawsze świeży, w delikatesach pamiętają Twoje zamówienie, a półki są pełne produktów, które sprawiają, że dom czuje się jak dom.

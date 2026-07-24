@@ -16,14 +16,20 @@ export const PHONE = {
   href: 'tel:+17736373772',
 };
 
-export const HOURS: Array<{ day: string; hours: string }> = [
-  { day: 'Monday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Tuesday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Wednesday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Thursday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Friday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Saturday', hours: '7:00 AM – 7:00 PM' },
-  { day: 'Sunday', hours: '9:00 AM – 3:00 PM' },
+// Day identifiers, not display text -- translated per-locale via
+// ui[locale].days in src/i18n/ui.ts. Hours use 24-hour format since it
+// needs no per-locale translation (unlike 12-hour AM/PM, an English/US
+// convention).
+export type DayKey = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+
+export const HOURS: Array<{ day: DayKey; hours: string }> = [
+  { day: 'monday', hours: '08:00–20:00' },
+  { day: 'tuesday', hours: '08:00–20:00' },
+  { day: 'wednesday', hours: '08:00–20:00' },
+  { day: 'thursday', hours: '08:00–20:00' },
+  { day: 'friday', hours: '08:00–20:00' },
+  { day: 'saturday', hours: '07:00–19:00' },
+  { day: 'sunday', hours: '09:00–15:00' },
 ];
 
 export const GOOGLE_MAPS_EMBED_URL =
