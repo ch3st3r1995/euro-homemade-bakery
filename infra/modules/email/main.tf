@@ -11,14 +11,22 @@ resource "aws_sesv2_email_identity" "this" {
 # attempts returned procedural/console-UI content, not a literal record
 # example). Verify against docs.aws.amazon.com/ses before the first real
 # `terraform apply`.
+#
+# for_each must use statically-known keys -- dkim_signing_attributes[0].tokens
+# isn't known until aws_sesv2_email_identity.this is actually created, so
+# for_each can't be derived directly from it on a from-scratch apply
+# ("Invalid for_each argument": the set of keys can't be determined until
+# apply). Easy DKIM always issues exactly 3 tokens, so the keys below are
+# hardcoded indices ("0","1","2") -- only the token VALUES (looked up via
+# each.value below) need to wait until apply.
 resource "aws_route53_record" "dkim" {
-  for_each = toset(try(aws_sesv2_email_identity.this.dkim_signing_attributes[0].tokens, []))
+  for_each = toset(["0", "1", "2"])
 
   zone_id = var.hosted_zone_id
-  name    = "${each.value}._domainkey.${var.domain_name}"
+  name    = "${tolist(aws_sesv2_email_identity.this.dkim_signing_attributes[0].tokens)[tonumber(each.value)]}._domainkey.${var.domain_name}"
   type    = "CNAME"
   ttl     = 300
-  records = ["${each.value}.dkim.amazonses.com"]
+  records = ["${tolist(aws_sesv2_email_identity.this.dkim_signing_attributes[0].tokens)[tonumber(each.value)]}.dkim.amazonses.com"]
 }
 
 # SPF record -- reasonable pairing with SES DKIM per CLAUDE.md's own
