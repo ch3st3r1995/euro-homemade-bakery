@@ -1,15 +1,28 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CateringHero from '../../components/CateringHero.astro';
+import CateringIncludes from '../../components/CateringIncludes.astro';
 
 const locale = 'pl' as const;
 const entry = await getEntry(locale, 'catering');
 if (!entry) throw new Error(`Missing catering content entry for locale "${locale}"`);
+if (entry.data.page !== 'catering') throw new Error('catering.md frontmatter must have page: catering');
 const { Content } = await render(entry);
+const { heroHeading, heroIntro, includes } = entry.data;
 ---
 
 <BaseLayout locale={locale} title={entry.data.title} description={entry.data.description} path="catering">
-  <h1>{entry.data.title}</h1>
-  <img src="/images/catering/placeholder-1.svg" alt="" />
-  <Content />
+  <CateringHero locale={locale} heading={heroHeading} intro={heroIntro} />
+  <div class="catering-body">
+    <Content />
+  </div>
+  <CateringIncludes items={includes} />
 </BaseLayout>
+
+<style>
+  .catering-body {
+    padding: 0 32px 40px;
+    max-width: 720px;
+  }
+</style>

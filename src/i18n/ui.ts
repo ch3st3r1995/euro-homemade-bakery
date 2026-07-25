@@ -21,6 +21,8 @@ type UiStrings = {
   bread: { heading: string; intro: string };
   story: { heading: string; readMore: string };
   instagramCta: string;
+  instagramBlurb: string;
+  catering: { callToOrder: string; sendMessage: string };
   contactForm: {
     name: string;
     email: string;
@@ -57,6 +59,8 @@ const en: UiStrings = {
   },
   story: { heading: 'Our Story', readMore: 'Read our full story' },
   instagramCta: 'Follow us on Instagram',
+  instagramBlurb: 'Follow along for daily specials, fresh bakes, and behind-the-scenes at the shop.',
+  catering: { callToOrder: 'Call to Order', sendMessage: 'Send a Message' },
   contactForm: {
     name: 'Name',
     email: 'Email',
@@ -98,6 +102,8 @@ const uk: UiStrings = {
   },
   story: { heading: 'Наша історія', readMore: 'Читати нашу історію повністю' },
   instagramCta: 'Стежте за нами в Instagram',
+  instagramBlurb: 'Стежте за нами, щоб дізнаватися про щоденні акції, свіжу випічку та закулісся магазину.',
+  catering: { callToOrder: 'Зателефонувати для замовлення', sendMessage: 'Написати нам' },
   contactForm: {
     name: "Ім'я",
     email: 'Електронна пошта',
@@ -139,6 +145,8 @@ const pl: UiStrings = {
   },
   story: { heading: 'Nasza historia', readMore: 'Przeczytaj naszą pełną historię' },
   instagramCta: 'Śledź nas na Instagramie',
+  instagramBlurb: 'Śledź nas, aby być na bieżąco z codziennymi promocjami, świeżymi wypiekami i kulisami sklepu.',
+  catering: { callToOrder: 'Zadzwoń, aby zamówić', sendMessage: 'Napisz do nas' },
   contactForm: {
     name: 'Imię',
     email: 'E-mail',

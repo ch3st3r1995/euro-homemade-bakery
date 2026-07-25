@@ -30,13 +30,6 @@ departments:
       coffee from Ukrainian brands, frozen vareniki and pelmeni, herring and
       other fish, and Ukrainian and Polish pharmacy brands you know from
       home.
-storyTeaser: >-
-  Euro Homemade Bakery & Deli was founded by two lifelong friends with more
-  than 20 years of combined experience in European baking and specialty
-  grocery. What began as a shared dream -- a place that tastes like home --
-  has grown into a neighborhood staple the community keeps coming back to.
-  Every loaf, every dish, and every shelf is stocked with the same care
-  you'd expect from family.
 ---
 
 Family-run and proud of it -- come taste why the neighborhood keeps coming back.

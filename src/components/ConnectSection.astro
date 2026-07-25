@@ -1,29 +1,32 @@
 ---
+// Homepage-only: practical info (hours/map) + a lightweight Instagram
+// prompt. "Our Story" and the full contact form deliberately live on their
+// own dedicated pages (About / Contact) instead of being duplicated here --
+// see docs/superpowers/specs/2026-07-24-visual-redesign-design.md.
 import HoursAddressMap from './HoursAddressMap.astro';
-import StoryTeaser from './StoryTeaser.astro';
-import ContactForm from './ContactForm.astro';
 import InstagramIcon from './InstagramIcon.astro';
 import { ui, type Locale } from '../i18n/ui';
 import { INSTAGRAM_URL } from '../consts';
 
 interface Props {
   locale: Locale;
-  storyBody: string;
 }
 
-const { locale, storyBody } = Astro.props;
+const { locale } = Astro.props;
 const t = ui[locale];
 ---
 
 <section class="connect-section reveal">
   <HoursAddressMap locale={locale} />
   <div class="connect-side">
-    <StoryTeaser locale={locale} body={storyBody} />
-    <a class="instagram-cta" href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">
-      <InstagramIcon size={20} />
-      {t.instagramCta}
-    </a>
-    <ContactForm locale={locale} heading={t.nav.contact} />
+    <div class="instagram-card">
+      <h2>{t.instagramCta}</h2>
+      <p>{t.instagramBlurb}</p>
+      <a class="instagram-cta" href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">
+        <InstagramIcon size={20} />
+        {t.instagramCta}
+      </a>
+    </div>
   </div>
 </section>
 
@@ -35,9 +38,18 @@ const t = ui[locale];
   }
   .connect-side {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
     padding: 40px 32px 40px 0;
+  }
+  .instagram-card {
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px;
+    box-shadow: 0 4px 16px rgba(58, 42, 28, 0.08);
+  }
+  .instagram-card p {
+    margin: 0 0 18px;
   }
   .instagram-cta {
     display: inline-flex;

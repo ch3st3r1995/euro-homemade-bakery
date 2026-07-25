@@ -29,13 +29,6 @@ departments:
       wybór nabiału (kefir, jogurty, twaróg), mąka, kasze, herbata i kawa
       ukraińskich marek, mrożone wareniki i pielmieni, śledź i inne ryby, a
       także znane z domu ukraińskie i polskie marki apteczne.
-storyTeaser: >-
-  Euro Homemade Bakery & Deli założyli dwaj wieloletni przyjaciele z
-  ponad 20-letnim wspólnym doświadczeniem w europejskim piekarnictwie i
-  handlu specjalistycznymi produktami spożywczymi. To, co zaczęło się jako
-  wspólne marzenie -- miejsce o smaku domu -- stało się ulubionym miejscem
-  sąsiadów, do którego wciąż wracają. Każdy bochenek, każde danie i każda
-  półka są przygotowane z taką samą troską, jak w rodzinie.
 ---
 
 <!-- TODO(owner/translator): AI-drafted translation, not reviewed by a

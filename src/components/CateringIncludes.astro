@@ -1,0 +1,70 @@
+---
+interface Item {
+  heading: string;
+  description: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+const icons = ['🥖', '🥗', '🛒'];
+---
+
+<section class="catering-includes reveal">
+  <div class="includes-grid">
+    {
+      items.map((item, i) => (
+        <div class="include-card">
+          <div class="include-icon" aria-hidden="true">
+            {icons[i % icons.length]}
+          </div>
+          <h3>{item.heading}</h3>
+          <p>{item.description}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .catering-includes {
+    padding: 40px 32px;
+    background: var(--color-bg-alt, #f3e9d8);
+  }
+  .includes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 960px;
+  }
+  .include-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(58, 42, 28, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .include-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(58, 42, 28, 0.15);
+  }
+  .include-icon {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  .include-card h3 {
+    font-size: 1.1rem;
+    margin: 0 0 8px;
+  }
+  .include-card p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 720px) {
+    .includes-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
