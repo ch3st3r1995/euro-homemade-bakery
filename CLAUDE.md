@@ -19,8 +19,8 @@ before making changes; keep it updated as decisions get finalized.
 > it's the one manual step in this whole plan, deliberately excluded from
 > anything an agent executes.
 
-- **Business**: Euro Homemade Bakery and Deli — single-location Polish/European
-  bakery, deli, and grocery store, Chicago area.
+- **Business**: Euro Homemade Bakery and Deli — single-location, Ukrainian-owned
+  European bakery, deli, and grocery store, Chicago area.
 - **Instagram**: @euro.homemade (source of truth for brand voice/imagery until
   real assets are dropped in — see Section 4).
 - **Repo**: `github.com/ch3st3r1995/euro-homemade-bakery`
