@@ -5,14 +5,14 @@ import Hero from '../../components/Hero.astro';
 import DepartmentSection from '../../components/DepartmentSection.astro';
 import BreadSection from '../../components/BreadSection.astro';
 import PromoBanner from '../../components/PromoBanner.astro';
-import HoursAddressMap from '../../components/HoursAddressMap.astro';
+import ConnectSection from '../../components/ConnectSection.astro';
 
 const locale = 'en' as const;
 const entry = await getEntry(locale, 'home');
 if (!entry) throw new Error(`Missing home content entry for locale "${locale}"`);
 if (entry.data.page !== 'home') throw new Error('home.md frontmatter must have page: home');
 const { Content } = await render(entry);
-const { heroHeading, heroSubheading, departments } = entry.data;
+const { heroHeading, heroSubheading, departments, storyTeaser } = entry.data;
 ---
 
 <BaseLayout locale={locale} title={entry.data.title} description={entry.data.description} path="">
@@ -23,5 +23,5 @@ const { heroHeading, heroSubheading, departments } = entry.data;
   <BreadSection locale={locale} />
   <DepartmentSection department="deli" heading={departments.deli.heading} description={departments.deli.description} reveal="up" />
   <DepartmentSection department="grocery" heading={departments.grocery.heading} description={departments.grocery.description} reveal="left" tint />
-  <HoursAddressMap locale={locale} />
+  <ConnectSection locale={locale} storyBody={storyTeaser} />
 </BaseLayout>

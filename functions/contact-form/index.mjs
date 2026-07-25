@@ -32,7 +32,7 @@ export const handler = async (event) => {
     return jsonResponse(400, { error: 'Invalid JSON body' });
   }
 
-  const { name, email, phone, message } = payload;
+  const { name, email, phone, subject, message } = payload;
   if (!name || !email || !message) {
     return jsonResponse(400, { error: 'name, email, and message are required' });
   }
@@ -48,10 +48,10 @@ export const handler = async (event) => {
     Destination: { ToAddresses: [recipientEmail] },
     Content: {
       Simple: {
-        Subject: { Data: `Contact form: ${name}` },
+        Subject: { Data: subject ? `Contact form: ${subject}` : `Contact form: ${name}` },
         Body: {
           Text: {
-            Data: `Name: ${name}\nEmail: ${email}\nPhone: ${phone ?? ''}\n\n${message}`,
+            Data: `Name: ${name}\nEmail: ${email}\nPhone: ${phone ?? ''}\nSubject: ${subject ?? ''}\n\n${message}`,
           },
         },
       },

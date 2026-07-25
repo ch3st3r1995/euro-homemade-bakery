@@ -21,6 +21,7 @@ const pageSchema = z.discriminatedUnion('page', [
       deli: z.object({ heading: z.string(), description: z.string() }),
       grocery: z.object({ heading: z.string(), description: z.string() }),
     }),
+    storyTeaser: z.string(),
   }),
   z.object({
     page: z.literal('about'),

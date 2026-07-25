@@ -11,23 +11,111 @@ const t = ui[locale];
 ---
 
 <section class="hours-address-map">
-  <div>
+  <div class="info">
     <h2>{t.hours}</h2>
     <ul>
-      {HOURS.map((h) => (
-        <li>
-          <span>{t.days[h.day]}</span> <span>{h.hours}</span>
-        </li>
-      ))}
+      {
+        HOURS.map((h) => (
+          <li>
+            <span class="day">{t.days[h.day]}</span>
+            <span class="time">{h.hours}</span>
+          </li>
+        ))
+      }
     </ul>
-    <p>{ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}</p>
-    <p><a href={PHONE.href}>{PHONE.display}</a></p>
-    <a href={GOOGLE_MAPS_DIRECTIONS_URL} rel="noopener noreferrer" target="_blank">{t.directions}</a>
+    <div class="contact-line">
+      <span class="icon" aria-hidden="true">📍</span>
+      <p>{ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}</p>
+    </div>
+    <div class="contact-line">
+      <span class="icon" aria-hidden="true">📞</span>
+      <p><a href={PHONE.href}>{PHONE.display}</a></p>
+    </div>
+    <a class="directions-link" href={GOOGLE_MAPS_DIRECTIONS_URL} rel="noopener noreferrer" target="_blank">
+      {t.directions}
+    </a>
   </div>
-  <iframe
-    title="Map"
-    src={GOOGLE_MAPS_EMBED_URL}
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-  />
+  <div class="map-frame">
+    <iframe
+      title="Map"
+      src={GOOGLE_MAPS_EMBED_URL}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    />
+  </div>
 </section>
+
+<style>
+  .hours-address-map {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    padding: 40px 32px;
+  }
+  .info {
+    flex: 1;
+    min-width: 260px;
+  }
+  ul {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    max-width: 280px;
+    padding: 4px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(58, 42, 28, 0.08);
+  }
+  .day {
+    color: var(--color-text, #3a2a1c);
+    font-weight: 500;
+  }
+  .time {
+    color: var(--color-text-muted, #5c4630);
+  }
+  .contact-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .contact-line p {
+    margin: 0;
+  }
+  .icon {
+    font-size: 1rem;
+  }
+  .directions-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: 500;
+    color: var(--color-accent, #c96f42);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-accent, #c96f42);
+  }
+  .map-frame {
+    flex: 1;
+    min-width: 280px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(58, 42, 28, 0.12);
+  }
+  .map-frame iframe {
+    width: 100%;
+    height: 320px;
+    border: 0;
+    display: block;
+  }
+  @media (max-width: 720px) {
+    .hours-address-map {
+      flex-direction: column;
+    }
+    .map-frame,
+    .info {
+      width: 100%;
+    }
+  }
+</style>

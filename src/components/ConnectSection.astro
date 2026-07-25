@@ -1,0 +1,68 @@
+---
+import HoursAddressMap from './HoursAddressMap.astro';
+import StoryTeaser from './StoryTeaser.astro';
+import ContactForm from './ContactForm.astro';
+import InstagramIcon from './InstagramIcon.astro';
+import { ui, type Locale } from '../i18n/ui';
+import { INSTAGRAM_URL } from '../consts';
+
+interface Props {
+  locale: Locale;
+  storyBody: string;
+}
+
+const { locale, storyBody } = Astro.props;
+const t = ui[locale];
+---
+
+<section class="connect-section reveal">
+  <HoursAddressMap locale={locale} />
+  <div class="connect-side">
+    <StoryTeaser locale={locale} body={storyBody} />
+    <a class="instagram-cta" href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">
+      <InstagramIcon size={20} />
+      {t.instagramCta}
+    </a>
+    <ContactForm locale={locale} heading={t.nav.contact} />
+  </div>
+</section>
+
+<style>
+  .connect-section {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 12px 24px;
+  }
+  .connect-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 32px 40px 0;
+  }
+  .instagram-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 12px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7);
+    color: #fff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .instagram-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(238, 42, 123, 0.35);
+  }
+  @media (max-width: 900px) {
+    .connect-section {
+      grid-template-columns: 1fr;
+    }
+    .connect-side {
+      padding: 0 32px 40px;
+    }
+  }
+</style>

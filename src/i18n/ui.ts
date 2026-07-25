@@ -19,6 +19,20 @@ type UiStrings = {
   languageNames: Record<Locale, string>;
   footer: { legalPrivacy: string; legalTerms: string; followUs: string };
   bread: { heading: string; intro: string };
+  story: { heading: string; readMore: string };
+  instagramCta: string;
+  contactForm: {
+    name: string;
+    email: string;
+    phone: string;
+    subject: string;
+    message: string;
+    send: string;
+    sending: string;
+    success: string;
+    error: string;
+    notConfigured: string;
+  };
 };
 
 const en: UiStrings = {
@@ -40,6 +54,20 @@ const en: UiStrings = {
   bread: {
     heading: 'Our Bread',
     intro: "All ~15 varieties baked in-house daily -- see something you like? It's fresh at the counter every day.",
+  },
+  story: { heading: 'Our Story', readMore: 'Read our full story' },
+  instagramCta: 'Follow us on Instagram',
+  contactForm: {
+    name: 'Name',
+    email: 'Email',
+    phone: 'Phone',
+    subject: 'Subject',
+    message: 'Message',
+    send: 'Send Message',
+    sending: 'Sending...',
+    success: "Thanks -- we received your message and will be in touch.",
+    error: 'Something went wrong -- please call or email us directly.',
+    notConfigured: 'Contact form is not configured yet -- please call or email us directly.',
   },
 };
 
@@ -68,6 +96,20 @@ const uk: UiStrings = {
     intro:
       'Усі приблизно 15 видів хліба випікаються щодня на місці -- сподобалось щось? Це завжди свіже на прилавку.',
   },
+  story: { heading: 'Наша історія', readMore: 'Читати нашу історію повністю' },
+  instagramCta: 'Стежте за нами в Instagram',
+  contactForm: {
+    name: "Ім'я",
+    email: 'Електронна пошта',
+    phone: 'Телефон',
+    subject: 'Тема',
+    message: 'Повідомлення',
+    send: 'Надіслати',
+    sending: 'Надсилання...',
+    success: "Дякуємо -- ми отримали ваше повідомлення і незабаром з вами зв'яжемося.",
+    error: 'Щось пішло не так -- будь ласка, зателефонуйте або напишіть нам напряму.',
+    notConfigured: 'Форма зв\'язку ще не налаштована -- будь ласка, зателефонуйте або напишіть нам напряму.',
+  },
 };
 
 const pl: UiStrings = {
@@ -94,6 +136,20 @@ const pl: UiStrings = {
     heading: 'Nasze pieczywo',
     intro:
       'Wszystkie około 15 rodzajów pieczywa pieczone są na miejscu każdego dnia -- coś się spodobało? Zawsze świeże przy ladzie.',
+  },
+  story: { heading: 'Nasza historia', readMore: 'Przeczytaj naszą pełną historię' },
+  instagramCta: 'Śledź nas na Instagramie',
+  contactForm: {
+    name: 'Imię',
+    email: 'E-mail',
+    phone: 'Telefon',
+    subject: 'Temat',
+    message: 'Wiadomość',
+    send: 'Wyślij wiadomość',
+    sending: 'Wysyłanie...',
+    success: 'Dziękujemy -- otrzymaliśmy Twoją wiadomość i wkrótce się odezwiemy.',
+    error: 'Coś poszło nie tak -- zadzwoń lub napisz do nas bezpośrednio.',
+    notConfigured: 'Formularz kontaktowy nie jest jeszcze skonfigurowany -- zadzwoń lub napisz do nas bezpośrednio.',
   },
 };
 

@@ -2,6 +2,7 @@
 import { ui, type Locale } from '../i18n/ui';
 import { ADDRESS, PHONE, HOURS, INSTAGRAM_URL } from '../consts';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import InstagramIcon from './InstagramIcon.astro';
 
 interface Props {
   locale: Locale;
@@ -13,17 +14,63 @@ const today = HOURS[0];
 ---
 
 <footer>
-  <div>
+  <div class="footer-info">
     <p>{ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}</p>
     <p><a href={PHONE.href}>{PHONE.display}</a></p>
     <p>{t.hours}: {t.days[today.day]} {today.hours}</p>
   </div>
-  <div>
-    <a href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">{t.footer.followUs}</a>
+  <div class="footer-social">
+    <a class="instagram-link" href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">
+      <InstagramIcon size={20} />
+      {t.footer.followUs}
+    </a>
   </div>
-  <div>
+  <div class="footer-legal">
     <!-- No newsletter signup -- decided out for v1, see CLAUDE.md Section 1. -->
     <a href={getRelativeLocaleUrl(locale, 'privacy')}>{t.footer.legalPrivacy}</a>
     <a href={getRelativeLocaleUrl(locale, 'terms')}>{t.footer.legalTerms}</a>
   </div>
 </footer>
+
+<style>
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 28px 32px;
+    background: var(--color-bg-alt, #f3e9d8);
+    border-top: 1px solid rgba(58, 42, 28, 0.1);
+    font-size: 0.85rem;
+  }
+  footer p {
+    margin: 0 0 4px;
+  }
+  footer a {
+    color: var(--color-text, #3a2a1c);
+    text-decoration: none;
+  }
+  footer a:hover {
+    color: var(--color-accent, #c96f42);
+  }
+  .instagram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--color-accent, #c96f42) !important;
+    padding: 8px 16px;
+    border: 1px solid var(--color-accent, #c96f42);
+    border-radius: 999px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .instagram-link:hover {
+    background: var(--color-accent, #c96f42);
+    color: var(--color-accent-contrast, #fff8ef) !important;
+  }
+  .footer-legal {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+</style>

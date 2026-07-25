@@ -2,6 +2,7 @@
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HoursAddressMap from '../../components/HoursAddressMap.astro';
+import ContactForm from '../../components/ContactForm.astro';
 
 const locale = 'en' as const;
 const entry = await getEntry(locale, 'contact');
@@ -13,48 +14,7 @@ const { Content } = await render(entry);
   <h1>{entry.data.title}</h1>
   <Content />
 
-  <form id="contact-form">
-    <label>Name <input type="text" name="name" required /></label>
-    <label>Email <input type="email" name="email" required /></label>
-    <label>Phone <input type="tel" name="phone" /></label>
-    <label>Message <textarea name="message" required></textarea></label>
-    <button type="submit">Send</button>
-    <p id="contact-form-status" role="status"></p>
-  </form>
+  <ContactForm locale={locale} />
 
   <HoursAddressMap locale={locale} />
 </BaseLayout>
-
-<script>
-  // CORS is handled entirely at the API Gateway level (infra/modules/contact-form),
-  // not by this page or the Lambda -- see the project's infra plan.
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const status = document.getElementById('contact-form-status');
-  const endpoint = import.meta.env.PUBLIC_CONTACT_FORM_ENDPOINT;
-
-  form?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    if (!status) return;
-
-    if (!endpoint) {
-      status.textContent = 'Contact form is not configured yet -- please call or email us directly.';
-      return;
-    }
-
-    const data = Object.fromEntries(new FormData(form).entries());
-    status.textContent = 'Sending...';
-
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error(`Request failed: ${response.status}`);
-      status.textContent = 'Thanks -- we received your message and will be in touch.';
-      form.reset();
-    } catch {
-      status.textContent = 'Something went wrong -- please call or email us directly.';
-    }
-  });
-</script>

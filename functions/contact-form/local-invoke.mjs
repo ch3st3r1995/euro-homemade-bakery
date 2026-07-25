@@ -14,6 +14,7 @@ const mockEvent = {
     name: 'Test User',
     email: 'test@example.com',
     phone: '555-0100',
+    subject: 'Catering inquiry',
     message: 'This is a local test invocation.',
   }),
 };

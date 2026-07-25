@@ -1,0 +1,145 @@
+---
+// Shared contact form -- used on the /contact pages and the homepage
+// sidebar. CORS is handled entirely at the API Gateway level
+// (infra/modules/contact-form), not by this component or the Lambda.
+import { ui, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  heading?: string;
+}
+
+const { locale, heading } = Astro.props;
+const t = ui[locale].contactForm;
+// Read at build time -- a define:vars script is inlined (not a module), so
+// import.meta.env isn't available inside it at runtime.
+const endpoint = import.meta.env.PUBLIC_CONTACT_FORM_ENDPOINT ?? '';
+---
+
+<div class="contact-form-wrap">
+  {heading && <h2>{heading}</h2>}
+  <form class="contact-form">
+    <label>
+      {t.name}
+      <input type="text" name="name" required />
+    </label>
+    <label>
+      {t.email}
+      <input type="email" name="email" required />
+    </label>
+    <label>
+      {t.phone}
+      <input type="tel" name="phone" />
+    </label>
+    <label>
+      {t.subject}
+      <input type="text" name="subject" />
+    </label>
+    <label>
+      {t.message}
+      <textarea name="message" required></textarea>
+    </label>
+    <button type="submit">{t.send}</button>
+    <p class="form-status" role="status"></p>
+  </form>
+</div>
+
+{
+  /* Strings are passed in via define:vars since this script runs
+     client-side and can't import the server-only i18n module. */
+}
+<script define:vars={{ strings: t, endpoint }}>
+  document.querySelectorAll('.contact-form-wrap').forEach((wrap) => {
+    const form = wrap.querySelector('.contact-form');
+    const status = wrap.querySelector('.form-status');
+    if (!form || !status || form.dataset.bound) return;
+    form.dataset.bound = 'true';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!endpoint) {
+        status.textContent = strings.notConfigured;
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      status.textContent = strings.sending;
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+        status.textContent = strings.success;
+        form.reset();
+      } catch {
+        status.textContent = strings.error;
+      }
+    });
+  });
+</script>
+
+<style>
+  .contact-form-wrap {
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px;
+    box-shadow: 0 4px 16px rgba(58, 42, 28, 0.08);
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .contact-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text, #3a2a1c);
+  }
+  .contact-form input,
+  .contact-form textarea {
+    font-family: var(--font-body, sans-serif);
+    font-size: 0.9rem;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(58, 42, 28, 0.2);
+    background: var(--color-bg, #faf3e8);
+    color: var(--color-text, #3a2a1c);
+  }
+  .contact-form textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: 2px solid var(--color-accent, #c96f42);
+    outline-offset: 1px;
+  }
+  .contact-form button {
+    align-self: flex-start;
+    font-family: var(--font-body, sans-serif);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 11px 22px;
+    border: none;
+    border-radius: 6px;
+    background: var(--color-accent, #c96f42);
+    color: var(--color-accent-contrast, #fff8ef);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .contact-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(201, 111, 66, 0.4);
+  }
+  .form-status {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #5c4630);
+  }
+</style>
