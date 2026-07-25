@@ -8,13 +8,27 @@ heroSubheading: Świeżo pieczony chleb, domowe wędliny i europejskie produkty 
 departments:
   bakery:
     heading: Piekarnia
-    description: Świeży chleb i wypieki codziennie -- od chrupiącego europejskiego pieczywa po słodkości.
+    description: >-
+      Codziennie około 15 rodzajów świeżego pieczywa -- od klasycznego
+      francuskiego po pełnoziarniste i ziemniaczane -- a także croissanty
+      pieczone świeżo przez cały dzień, torty i wypieki od własnego
+      cukiernika (sernik, Napoleon, red velvet, tiramisu i inne), naleśniki
+      oraz pierożki (pirożki) w każdą sobotę.
   deli:
     heading: Delikatesy
-    description: Domowe i importowane wędliny, sery oraz dania gotowe na każdą okazję.
+    description: >-
+      Codziennie świeże gotowe dania -- kotlety, kotlety schabowe, gulasz,
+      gołąbki, placki ziemniaczane i sałatki takie jak oliwier czy
+      vinaigrette -- a także ukraiński barszcz i zupy, czebureki i wareniki w
+      każdą sobotę, szawarma oraz pełna lada wędlin -- kiełbasy, szynki, sery
+      i ukraińskie salo.
   grocery:
     heading: Sklep spożywczy
-    description: Półki pełne europejskich produktów spożywczych, które znasz z dzieciństwa.
+    description: >-
+      Europejskie produkty pierwszej potrzeby -- świeże owoce i warzywa, duży
+      wybór nabiału (kefir, jogurty, twaróg), mąka, kasze, herbata i kawa
+      ukraińskich marek, mrożone wareniki i pielmieni, śledź i inne ryby, a
+      także znane z domu ukraińskie i polskie marki apteczne.
 ---
 
 <!-- TODO(owner/translator): AI-drafted translation, not reviewed by a

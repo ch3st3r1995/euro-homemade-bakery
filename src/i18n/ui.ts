@@ -18,6 +18,7 @@ type UiStrings = {
   days: Record<DayKey, string>;
   languageNames: Record<Locale, string>;
   footer: { legalPrivacy: string; legalTerms: string; followUs: string };
+  bread: { heading: string; intro: string };
 };
 
 const en: UiStrings = {
@@ -36,6 +37,10 @@ const en: UiStrings = {
   },
   languageNames: { en: 'English', uk: 'Українська', pl: 'Polski' },
   footer: { legalPrivacy: 'Privacy Policy', legalTerms: 'Terms of Service', followUs: 'Follow us' },
+  bread: {
+    heading: 'Our Bread',
+    intro: "All ~15 varieties baked in-house daily -- see something you like? It's fresh at the counter every day.",
+  },
 };
 
 const uk: UiStrings = {
@@ -58,6 +63,11 @@ const uk: UiStrings = {
     legalTerms: 'Умови використання',
     followUs: 'Стежте за нами',
   },
+  bread: {
+    heading: 'Наш хліб',
+    intro:
+      'Усі приблизно 15 видів хліба випікаються щодня на місці -- сподобалось щось? Це завжди свіже на прилавку.',
+  },
 };
 
 const pl: UiStrings = {
@@ -79,6 +89,11 @@ const pl: UiStrings = {
     legalPrivacy: 'Polityka prywatności',
     legalTerms: 'Warunki korzystania',
     followUs: 'Śledź nas',
+  },
+  bread: {
+    heading: 'Nasze pieczywo',
+    intro:
+      'Wszystkie około 15 rodzajów pieczywa pieczone są na miejscu każdego dnia -- coś się spodobało? Zawsze świeże przy ladzie.',
   },
 };
 

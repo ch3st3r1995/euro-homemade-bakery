@@ -1,10 +1,11 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
 import DepartmentSection from '../../components/DepartmentSection.astro';
+import BreadSection from '../../components/BreadSection.astro';
 import PromoBanner from '../../components/PromoBanner.astro';
 import HoursAddressMap from '../../components/HoursAddressMap.astro';
-import OrderOnlineLinks from '../../components/OrderOnlineLinks.astro';
 
 const locale = 'pl' as const;
 const entry = await getEntry(locale, 'home');
@@ -15,16 +16,12 @@ const { heroHeading, heroSubheading, departments } = entry.data;
 ---
 
 <BaseLayout locale={locale} title={entry.data.title} description={entry.data.description} path="">
-  <section class="hero">
-    <img src="/images/hero/placeholder-1.svg" alt="" />
-    <h1>{heroHeading}</h1>
-    <p>{heroSubheading}</p>
-    <OrderOnlineLinks locale={locale} />
-  </section>
+  <Hero locale={locale} heading={heroHeading} subheading={heroSubheading} />
   <Content />
   <PromoBanner locale={locale} />
-  <DepartmentSection department="bakery" heading={departments.bakery.heading} description={departments.bakery.description} />
-  <DepartmentSection department="deli" heading={departments.deli.heading} description={departments.deli.description} />
-  <DepartmentSection department="grocery" heading={departments.grocery.heading} description={departments.grocery.description} />
+  <DepartmentSection department="bakery" heading={departments.bakery.heading} description={departments.bakery.description} reveal="up" />
+  <BreadSection locale={locale} />
+  <DepartmentSection department="deli" heading={departments.deli.heading} description={departments.deli.description} reveal="up" />
+  <DepartmentSection department="grocery" heading={departments.grocery.heading} description={departments.grocery.description} reveal="left" tint />
   <HoursAddressMap locale={locale} />
 </BaseLayout>

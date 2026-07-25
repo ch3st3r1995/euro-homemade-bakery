@@ -3,21 +3,95 @@ interface Props {
   department: 'bakery' | 'deli' | 'grocery';
   heading: string;
   description: string;
+  reveal?: 'up' | 'left';
+  tint?: boolean;
 }
 
-const { department, heading, description } = Astro.props;
+const { department, heading, description, reveal = 'up', tint = false } = Astro.props;
 
-// Placeholder images per CLAUDE.md Section 4 convention:
-// public/images/{section}/placeholder-{n}.{ext}
-// SVG placeholders for now (no image-generation tooling available in this
-// environment) -- swap for real photos per MEDIA-TODO.md.
-const images = [1, 2].map((n) => `/images/${department}/placeholder-${n}.svg`);
+// Real curated photos (cropped clean of any Instagram-overlay text) --
+// per docs/superpowers/specs/2026-07-24-visual-redesign-design.md.
+const imagesByDepartment: Record<typeof department, string[]> = {
+  bakery: [
+    'bakery-croissants.jpg',
+    'bakery-crepes.jpg',
+    'bakery-desserts.jpg',
+    'bakery-cakes-case.jpg',
+    'bakery-eclairs-case.jpg',
+    'bakery-bread.jpg',
+  ],
+  deli: [
+    'deli-prepared.jpg',
+    'deli-borscht.jpg',
+    'deli-sausages.jpg',
+    'deli-shawarma.jpg',
+    'deli-chebureki.jpg',
+    'deli-salo.jpg',
+  ],
+  grocery: [
+    'grocery-produce.jpg',
+    'grocery-dairy.jpg',
+    'grocery-pantry.jpg',
+    'grocery-fish.jpg',
+    'grocery-pharmacy.jpg',
+    'grocery-candy.jpg',
+  ],
+};
+
+const images = imagesByDepartment[department].map((file) => `/images/${department}/${file}`);
+const revealClass = reveal === 'left' ? 'reveal-left' : 'reveal';
 ---
 
-<section class={`department department-${department}`}>
-  <h2>{heading}</h2>
-  <p>{description}</p>
+<section class:list={['department', `department-${department}`, revealClass, { tint }]}>
+  <div class="department-text">
+    <h2>{heading}</h2>
+    <p>{description}</p>
+  </div>
   <div class="department-gallery">
-    {images.map((src) => <img src={src} alt="" loading="lazy" />)}
+    {images.map((src) => <div class="ph" style={`background-image:url('${src}')`} />)}
   </div>
 </section>
+
+<style>
+  section {
+    padding: 40px 32px;
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  section.tint {
+    background: var(--color-bg-alt, #f3e9d8);
+  }
+  .department-text {
+    flex: 0 0 280px;
+  }
+  .department-gallery {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 720px;
+  }
+  .ph {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .ph:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+  }
+  @media (max-width: 720px) {
+    section {
+      flex-direction: column;
+    }
+    .department-gallery {
+      max-width: 100%;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

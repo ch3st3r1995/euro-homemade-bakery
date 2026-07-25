@@ -1,0 +1,58 @@
+/* Warm/rustic visual system, validated via the visual-companion mockup tool.
+   See docs/superpowers/specs/2026-07-24-visual-redesign-design.md for the
+   design decisions behind the palette, typography, and motion choices. */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap');
+
+:root {
+  --color-bg: #faf3e8;
+  --color-bg-alt: #f3e9d8;
+  --color-text: #3a2a1c;
+  --color-text-muted: #5c4630;
+  --color-accent: #c96f42;
+  --color-accent-contrast: #fff8ef;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  margin: 0;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  margin: 0 0 0.4em;
+}
+
+p {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+/* Scroll-reveal: elements start hidden/offset, gain .is-visible via the
+   IntersectionObserver in BaseLayout once ~20% enters the viewport. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal-left.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}

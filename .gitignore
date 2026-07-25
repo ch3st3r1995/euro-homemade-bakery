@@ -224,6 +224,9 @@ npm-debug.log*
 # Astro
 .astro/
 
+# Superpowers brainstorming companion (local scratch, not project output)
+.superpowers/
+
 # Local build artifacts
 .build/
 terraform-plan.txt

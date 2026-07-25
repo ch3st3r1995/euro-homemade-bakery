@@ -1,0 +1,75 @@
+---
+import { ui, type Locale } from '../i18n/ui';
+import { BREAD_VARIETIES } from '../data/bread';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = ui[locale].bread;
+---
+
+<section class="bread-section reveal-left tint">
+  <h2>{t.heading}</h2>
+  <p>{t.intro}</p>
+  <div class="bread-grid">
+    {
+      BREAD_VARIETIES.map((variety) => (
+        <div class="bread-tile">
+          <div class="ph" style={`background-image:url('/images/bread/${variety.image}')`} />
+          <div class="name">{variety.name[locale]}</div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 40px 32px;
+  }
+  section.tint {
+    background: var(--color-bg-alt, #f3e9d8);
+  }
+  .bread-section > p {
+    max-width: 640px;
+    margin-bottom: 20px;
+  }
+  .bread-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px 16px;
+  }
+  .bread-tile {
+    cursor: pointer;
+  }
+  .ph {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .bread-tile:hover .ph {
+    transform: scale(1.06);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  }
+  .name {
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 6px;
+    color: var(--color-text-muted, #5c4630);
+    line-height: 1.3;
+  }
+  @media (max-width: 720px) {
+    .bread-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 440px) {
+    .bread-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
