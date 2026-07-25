@@ -1,6 +1,6 @@
 ---
 import { ui, type Locale } from '../i18n/ui';
-import { ADDRESS, PHONE, HOURS, INSTAGRAM_URL } from '../consts';
+import { ADDRESS, PHONE, INSTAGRAM_URL } from '../consts';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import InstagramIcon from './InstagramIcon.astro';
 
@@ -10,14 +10,12 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = ui[locale];
-const today = HOURS[0];
 ---
 
 <footer>
   <div class="footer-info">
     <p>{ADDRESS.street}, {ADDRESS.city}, {ADDRESS.state} {ADDRESS.zip}</p>
     <p><a href={PHONE.href}>{PHONE.display}</a></p>
-    <p>{t.hours}: {t.days[today.day]} {today.hours}</p>
   </div>
   <div class="footer-social">
     <a class="instagram-link" href={INSTAGRAM_URL} rel="noopener noreferrer" target="_blank">
