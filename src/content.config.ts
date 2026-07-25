@@ -50,6 +50,8 @@ const pageSchema = z.discriminatedUnion('page', [
     translated: z.boolean(),
     promoTitle: z.string(),
     promoActive: z.boolean(),
+    specials: z.array(z.object({ badge: z.string(), heading: z.string(), description: z.string() })),
+    instagramHeading: z.string(),
   }),
 ]);
 

@@ -40,4 +40,4 @@ pass and WebP/AVIF + responsive-size-variant conversion per the note above.
 | `public/images/grocery/grocery-pharmacy.jpg` | Grocery pharmacy shelf | real asset added |
 | `public/images/grocery/grocery-candy.jpg` | Grocery imported-candy shelf | real asset added |
 | `public/images/catering/catering-spread.webp` | Catering platter spread | real asset added |
-| `public/images/history/placeholder-1.svg` | About/heritage page hero image | placeholder |
+| `public/images/history/owners.png` | About/heritage page hero image (the two owners) | real asset added |

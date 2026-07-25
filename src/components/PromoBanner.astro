@@ -2,6 +2,7 @@
 // getEntry/render: docs.astro.build/en/reference/modules/astro-content/
 import { getEntry, render } from 'astro:content';
 import type { Locale } from '../i18n/ui';
+import InstagramIcon from './InstagramIcon.astro';
 
 interface Props {
   locale: Locale;
@@ -12,13 +13,110 @@ const entry = await getEntry(locale, 'promo');
 if (!entry) throw new Error(`Missing promo content entry for locale "${locale}"`);
 if (entry.data.page !== 'promo') throw new Error('promo.md frontmatter must have page: promo');
 const { Content } = await render(entry);
+const { promoTitle, promoActive, specials, instagramHeading } = entry.data;
 ---
 
 {
-  entry.data.promoActive && (
-    <section class="promo-banner">
-      <h2>{entry.data.promoTitle}</h2>
-      <Content />
+  promoActive && (
+    <section class="promo-banner reveal">
+      <h2>{promoTitle}</h2>
+      <div class="promo-grid">
+        {specials.map((special) => (
+          <div class="promo-card">
+            <div class="promo-badge">{special.badge}</div>
+            <h3>{special.heading}</h3>
+            <p>{special.description}</p>
+          </div>
+        ))}
+        <div class="promo-card promo-instagram">
+          <div class="promo-badge instagram-badge">
+            <InstagramIcon size={24} />
+          </div>
+          <h3>{instagramHeading}</h3>
+          <Content />
+        </div>
+      </div>
     </section>
   )
 }
+
+<style>
+  .promo-banner {
+    padding: 40px 32px;
+  }
+  .promo-banner h2 {
+    margin-bottom: 20px;
+  }
+  .promo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .promo-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(58, 42, 28, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .promo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(58, 42, 28, 0.15);
+  }
+  .promo-card h3 {
+    font-size: 1.1rem;
+    margin: 0 0 6px;
+  }
+  .promo-card p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .promo-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading, serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-accent-contrast, #fff8ef);
+    background: var(--color-accent, #c96f42);
+    border-radius: 999px;
+    padding: 8px 18px;
+    margin-bottom: 14px;
+    animation: promo-pulse 2.4s ease-in-out infinite;
+  }
+  .promo-instagram {
+    background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
+    color: #fff;
+  }
+  .promo-instagram h3 {
+    color: #fff;
+  }
+  .promo-instagram :global(p) {
+    color: #fff;
+    font-size: 0.9rem;
+  }
+  .promo-instagram :global(a) {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  .instagram-badge {
+    background: rgba(255, 255, 255, 0.25);
+    animation: none;
+  }
+  @keyframes promo-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.06);
+    }
+  }
+  @media (max-width: 720px) {
+    .promo-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -17,7 +17,9 @@ const { heroHeading, heroSubheading, departments } = entry.data;
 
 <BaseLayout locale={locale} title={entry.data.title} description={entry.data.description} path="">
   <Hero locale={locale} heading={heroHeading} subheading={heroSubheading} />
-  <Content />
+  <div class="page-intro">
+    <Content />
+  </div>
   <PromoBanner locale={locale} />
   <DepartmentSection department="bakery" heading={departments.bakery.heading} description={departments.bakery.description} reveal="up" />
   <BreadSection locale={locale} />

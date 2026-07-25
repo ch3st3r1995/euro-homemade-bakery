@@ -56,3 +56,11 @@ a {
   opacity: 1;
   transform: translateX(0);
 }
+
+/* Shared gutter for pages/sections that are just plain text (stub legal
+   pages, page intros) and would otherwise touch the viewport edge. */
+.page-intro {
+  padding: 40px 32px;
+  max-width: 720px;
+}
+

@@ -1,6 +1,8 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AboutHero from '../../components/AboutHero.astro';
+import { ui } from '../../i18n/ui';
 
 const locale = 'pl' as const;
 const entry = await getEntry(locale, 'about');
@@ -9,7 +11,7 @@ const { Content } = await render(entry);
 ---
 
 <BaseLayout locale={locale} title={entry.data.title} description={entry.data.description} path="about">
-  <h1>{entry.data.title}</h1>
-  <img src="/images/history/placeholder-1.svg" alt="" />
-  <Content />
+  <AboutHero heading={ui[locale].story.heading}>
+    <Content />
+  </AboutHero>
 </BaseLayout>

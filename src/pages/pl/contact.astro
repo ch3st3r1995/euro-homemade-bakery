@@ -11,10 +11,21 @@ const { Content } = await render(entry);
 ---
 
 <BaseLayout locale={locale} title={entry.data.title} description={entry.data.description} path="contact">
-  <h1>{entry.data.title}</h1>
-  <Content />
+  <div class="page-intro">
+    <h1>{entry.data.title}</h1>
+    <Content />
+  </div>
 
-  <ContactForm locale={locale} />
+  <div class="contact-form-section">
+    <ContactForm locale={locale} />
+  </div>
 
   <HoursAddressMap locale={locale} />
 </BaseLayout>
+
+<style>
+  .contact-form-section {
+    padding: 0 32px 40px;
+    max-width: 560px;
+  }
+</style>
