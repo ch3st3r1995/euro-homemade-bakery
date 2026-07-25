@@ -17,7 +17,7 @@ const t = ui[locale].bread;
     {
       BREAD_VARIETIES.map((variety) => (
         <div class="bread-tile">
-          <div class="ph" style={`background-image:url('/images/bread/${variety.image}')`} />
+          <img class="ph" src={`/images/bread/${variety.image}`} alt="" loading="lazy" />
           <div class="name">{variety.name[locale]}</div>
         </div>
       ))
@@ -46,9 +46,10 @@ const t = ui[locale].bread;
   }
   .ph {
     aspect-ratio: 1 / 1;
+    width: 100%;
+    display: block;
     border-radius: 8px;
-    background-size: cover;
-    background-position: center center;
+    object-fit: cover;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   .bread-tile:hover .ph {

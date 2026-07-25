@@ -48,7 +48,7 @@ const revealClass = reveal === 'left' ? 'reveal-left' : 'reveal';
     <p>{description}</p>
   </div>
   <div class="department-gallery">
-    {images.map((src) => <div class="ph" style={`background-image:url('${src}')`} />)}
+    {images.map((src) => <img class="ph" src={src} alt="" loading="lazy" />)}
   </div>
 </section>
 
@@ -67,6 +67,7 @@ const revealClass = reveal === 'left' ? 'reveal-left' : 'reveal';
   }
   .department-gallery {
     flex: 1;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
@@ -74,9 +75,10 @@ const revealClass = reveal === 'left' ? 'reveal-left' : 'reveal';
   }
   .ph {
     aspect-ratio: 1 / 1;
+    width: 100%;
+    display: block;
     border-radius: 8px;
-    background-size: cover;
-    background-position: center center;
+    object-fit: cover;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
