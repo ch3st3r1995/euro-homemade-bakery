@@ -9,14 +9,62 @@ interface Props {
 }
 
 const { locale, path } = Astro.props;
+
+// Flag + short abbreviation instead of the full language name -- "UA" (not
+// "UK") pairs with the Ukrainian flag to avoid reading as "United Kingdom".
+const badge: Record<Locale, { flag: string; abbr: string }> = {
+  en: { flag: '🇺🇸', abbr: 'EN' },
+  uk: { flag: '🇺🇦', abbr: 'UA' },
+  pl: { flag: '🇵🇱', abbr: 'PL' },
+};
 ---
 
 <nav aria-label="Language switcher" class="language-switcher">
   {
     locales.map((loc) => (
-      <a href={getRelativeLocaleUrl(loc, path)} aria-current={loc === locale ? 'page' : undefined}>
-        {ui[locale].languageNames[loc]}
+      <a
+        href={getRelativeLocaleUrl(loc, path)}
+        aria-current={loc === locale ? 'page' : undefined}
+        title={ui[locale].languageNames[loc]}
+      >
+        <span class="flag" aria-hidden="true">
+          {badge[loc].flag}
+        </span>
+        <span class="abbr">{badge[loc].abbr}</span>
       </a>
     ))
   }
 </nav>
+
+<style>
+  .language-switcher {
+    display: flex;
+    gap: 6px;
+  }
+  .language-switcher a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-body, sans-serif);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text, #3a2a1c);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(58, 42, 28, 0.15);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .language-switcher a:hover {
+    border-color: var(--color-accent, #c96f42);
+  }
+  .language-switcher a[aria-current='page'] {
+    background: var(--color-accent, #c96f42);
+    border-color: var(--color-accent, #c96f42);
+    color: var(--color-accent-contrast, #fff8ef);
+  }
+  .flag {
+    font-size: 1rem;
+    line-height: 1;
+  }
+</style>

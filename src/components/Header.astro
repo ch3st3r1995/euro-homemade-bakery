@@ -15,7 +15,7 @@ const t = ui[locale];
 
 <header>
   <a href={getRelativeLocaleUrl(locale, '')} class="brand">{BUSINESS_NAME}</a>
-  <nav aria-label="Main navigation">
+  <nav aria-label="Main navigation" class="main-nav">
     <a href={getRelativeLocaleUrl(locale, '')}>{t.nav.home}</a>
     <a href={getRelativeLocaleUrl(locale, 'about')}>{t.nav.about}</a>
     <a href={getRelativeLocaleUrl(locale, 'catering')}>{t.nav.catering}</a>
@@ -23,3 +23,43 @@ const t = ui[locale];
   </nav>
   <LanguageSwitcher locale={locale} path={path} />
 </header>
+
+<style>
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 32px;
+    background: var(--color-bg, #faf3e8);
+    border-bottom: 1px solid rgba(58, 42, 28, 0.08);
+  }
+  .brand {
+    font-family: var(--font-heading, serif);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text, #3a2a1c);
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .main-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .main-nav a {
+    font-family: var(--font-body, sans-serif);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text, #3a2a1c);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  }
+  .main-nav a:hover {
+    background: var(--color-accent, #c96f42);
+    color: var(--color-accent-contrast, #fff8ef);
+    transform: translateY(-1px);
+  }
+</style>
